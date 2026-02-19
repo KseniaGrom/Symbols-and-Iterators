@@ -12,9 +12,21 @@ export default class Team {
     this.members.push(character);
   }
   
-  *[Symbol.iterator]() {
-    for (const member of this.members) {
-      yield member;
+  [Symbol.iterator]() {
+      let step = 0;
+      const max = this.members.length;
+      const squad = this.members;
+      
+      const iterator = {
+        next() {
+          while (step < max) {
+            step = step + 1;
+            return { value: squad[step - 1], done: false };
+          }
+          return { done: true };
+        }
+      };
+      
+      return iterator;
     }
-  }
 }
